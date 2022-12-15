@@ -12,17 +12,6 @@ env:
       AWS_ACCESS_KEY_ID: AKIA2BNAHQ7V3ATIWREY
       AWS_SECRET_ACCESS_KEY: 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
       AWS_DEFAULT_REGION: us-east-1
-        - name: Build
-          run: yarn build
-
-        - name: Deploy
-          uses: lbertenasco/s3-deploy@v1
-          with:
-            folder: build
-            bucket: nikhil-aws
-            dist-id: E3D1D0TY9SPLTF
-            invalidation: / *
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -38,7 +27,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world
-         - name: Build
+        - name: Build
           run: yarn build
         - name: Deploy
           uses: lbertenasco/s3-deploy@v1
