@@ -1,7 +1,6 @@
 name: Build and deploy to riverus-contract-app
 # Controls when the workflow will run
 on:
-# Triggers the workflow on push or pull request events but only for the "uat" branch
 pull_request:
 branches: [master]
 jobs:
@@ -22,7 +21,6 @@ steps:
           run: yarn build
 
         - name: Deploy
-          uses: lbertenasco/s3-deploy@v1
           uses: lbertenasco/s3-deploy@v1
           with:
             folder: build
