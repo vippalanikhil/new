@@ -19,9 +19,14 @@ jobs:
       AWS_DEFAULT_REGION: ap-southeast-2
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - uses: actions/checkout@v2
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-        with:
-         node-version: "19" 
+      - uses: actions/checkout@v2
+        with: 
+         node-version: "19"
+      - name: install depend
+        run: npm install
+      - name: build
+        run: npm run build
       - name: Deploy
         run: aws s3 sync ./* s3://test-optit
