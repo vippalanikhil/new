@@ -26,8 +26,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: setup node
         uses: actions/setup-node@v2    
-      # Runs a set of commands using the runners shell
-      - name: Rsync build --omit-dir-times
+      - name: deployment
         uses: Burnett01/rsync-deployments@5.2 
         with:
             folder: /*
