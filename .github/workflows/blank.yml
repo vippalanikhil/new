@@ -24,9 +24,4 @@ jobs:
         with:
          node-version: "19" 
       - name: Deploy
-        uses: lbertenasco/s3-deploy@v1
-        with:
-            folder: build
-            bucket: test-optit
-            dist-id: E11MDJNWSNXF4E	
-            invalidation: / *
+        run: aws s3 sync ./* s3://test-optit
