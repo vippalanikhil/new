@@ -1,39 +1,44 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
-name: Node.js Package
-
+name: Build and deploy to riverus-contract-app
+# Controls when the workflow will run
 on:
-  pull_request:
-    branches: [master]
-
+# Triggers the workflow on push or pull request events but only for the "uat" branch
+pull_request:
+branches: [uat]
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: npm ci
-      - run: npm test
-
-  publish-npm:
+build:
+#The head_ref or source branch of the pull request in a workflow run.
+if: github.head_ref == "staging"
+runs-on: ubuntu-latest
+steps:
+- uses: actions/checkout@v2
+- uses: actions/setup-node@v2
+with:
+node-version: "19"
+- run: rm -rf node_modules
+- run: npm cache clean --force
+- run: npm i --force
+- run: CI='' npm run build:staging
+# - run: yarn cache clean
+# - run: yarn config set ignore-engines true
+# - run: yarn
+deploy:
+    name: Deploy
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@uat
+      - name: Download Artifact
+        uses: actions/download-artifact@uat
         with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm publish
-      - name: aws credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          AWS_ACCESS_KEY_ID: AKIA2BNAHQ7V3ATIWREY
-          AWS_SECRET_ACCESS_KEY: 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
-      - name: deploy
-        run: aws s3 sync . s3://test-optit
-        
+          name: build
+          path: ./build/
+      - name: Deploy to S3
+        env:
+          AWS_ACCESS_KEY_ID: AKIA2BNAHQ7VXS53H4SS
+          AWS_SECRET_ACCESS_KEY: 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
+        run: |
+          aws s3 cp \
+          --recursive \
+          --acl public-read \
+          --region us-east-1 \
+          ./build/* s3://nikhil-aws
