@@ -12,6 +12,6 @@ jobs:
       with:
         args: --acl public-read --follow-symlinks --delete --exclude '.git*/*'
       env:
-        AWS_S3_BUCKET: lokesh-test-bucket
-        AWS_ACCESS_KEY_ID: AKIAQEPBFCHW7E7Y47I6
-        AWS_SECRET_ACCESS_KEY: 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
+        AWS_S3_BUCKET: optit
+        AWS_ACCESS_KEY_ID: AKIA2BNAHQ7VXZEKS43N
+        AWS_SECRET_ACCESS_KEY: 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
