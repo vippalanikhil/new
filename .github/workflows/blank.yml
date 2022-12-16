@@ -13,12 +13,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 19
-      - run: |
-          npm i -D
-          npm test --if-present
-          npm run build:prod
-        env:
-          CI: true
+      - run: rm -rf node_modules
+      - run: npm cache clean --force
+      - run: npm i --force
+      - run: CI='' npm run build:staging
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
