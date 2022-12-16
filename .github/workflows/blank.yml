@@ -25,9 +25,9 @@ jobs:
         with:  
           path: ./build
       - name: Deploy to S3
-        env:
-          AWS_ACCESS_KEY_ID: AKIAQEPBFCHW7E7Y47I6
-          AWS_SECRET_ACCESS_KEY: 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
-          aws-region: ap-south-1
         uses: aws-actions/configure-aws-credentials@v1
+        env:
+          aws-access-key-id: AKIAQEPBFCHW7E7Y47I6
+          aws-secret-access-key: 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
+          aws-region: ap-south-1   
       - run: aws s3 sync ./build s3://lokesh-test-bucket
