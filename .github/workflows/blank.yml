@@ -32,4 +32,4 @@ jobs:
           aws-region: ap-south-1   
           aws_bucket: lokesh-test-bucket
           source_dir: ./build
-          
+          destination_dir: lokesh
