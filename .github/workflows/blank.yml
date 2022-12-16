@@ -24,3 +24,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:  
           path: build
+      - name: Deploy to S3
+        env:
+          AWS_ACCESS_KEY_ID: AKIAQEPBFCHW7E7Y47I6
+          AWS_SECRET_ACCESS_KEY: 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
+        run: |
+          aws s3 cp \
+          --recursive \
+          --acl public-read \
+          --region ap-south-1 \
+          ./build/* s3://lokesh-test-bucket
