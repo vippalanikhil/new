@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "19"
-      - run: mkdir build    
+      - run: mkdir /home/ubuntu/build    
       - name: upload
         uses: actions/upload-artifact@v2.2.0
         with: 
@@ -23,7 +23,7 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v2
         with:  
-          path: build
+          path: /home/ubuntu/build
       - name: Deploy to S3
         env:
           AWS_ACCESS_KEY_ID: AKIAQEPBFCHW7E7Y47I6
@@ -33,4 +33,4 @@ jobs:
           --recursive \
           --acl public-read \
           --region ap-south-1 \
-            build s3://lokesh-test-bucket/lokesh/
+            /home/ubuntu/build s3://lokesh-test-bucket/lokesh/
