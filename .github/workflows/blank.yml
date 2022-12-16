@@ -33,4 +33,4 @@ jobs:
           --recursive \
           --acl public-read \
           --region ap-south-1 \
-          ./build/* s3://lokesh-test-bucket
+            build/* s3://lokesh-test-bucket
