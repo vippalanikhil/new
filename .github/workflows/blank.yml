@@ -15,7 +15,6 @@ jobs:
           node-version: 19
       - run: rm -rf node_modules
       - run: npm cache clean --force
-      - run: CI='' npm run build:staging
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
