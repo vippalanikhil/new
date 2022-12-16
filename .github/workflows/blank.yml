@@ -14,10 +14,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "19"
+      - run: mkdir build    
       - name: upload
         uses: actions/upload-artifact@v2.2.0
         with: 
           name: build
           path: build 
-        
-        
