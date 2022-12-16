@@ -1,35 +1,48 @@
-name: Deployment
-
+name: Build and deploy
 on:
   pull_request:
     branches:
       - master
-
 jobs:
   build:
-#The head_ref or source branch of the pull request in a workflow run.
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: node
+        uses: actions/setup-node@v1
         with:
-          node-version: "19"
-      - run: mkdir ./build    
-      - name: upload
-        uses: actions/upload-artifact@v2.2.0
-        with: 
+          node-version: 19
+      - run: |
+          npm i -D
+          npm test --if-present
+          npm run build:prod
+        env:
+          CI: true
+      - name: Upload Artifact
+        uses: actions/upload-artifact@master
+        with:
           name: build
-          path: build 
+          path: build
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
       - name: Download Artifact
-        uses: actions/download-artifact@v2
-        with:  
-          path: ./build
-      - name: Deploy to S3
-        uses: shallwefootball/s3-upload-action@master
+        uses: actions/download-artifact@master
         with:
-          aws_key_id: AKIAQEPBFCHW7E7Y47I6
-          aws_secret_access_key: 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
-          aws-region: ap-south-1   
-          aws_bucket: lokesh-test-bucket
-          source_dir: ./build
-          destination_dir: lokesh
+          name: build
+          path: build
+      - uses: actions/checkout@master
+      - name: Deploy to S3
+        env:
+          AWS_ACCESS_KEY_ID: AKIAQEPBFCHW7E7Y47I6
+          AWS_SECRET_ACCESS_KEY: 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
+        run: |
+          aws s3 cp \
+          --recursive \
+          --acl public-read \
+          --region ap-southeast-2 \
+          ./build s3://lokesh-test-bucket
