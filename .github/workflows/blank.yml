@@ -25,9 +25,11 @@ jobs:
         with:  
           path: ./build
       - name: Deploy to S3
-        uses: aws-actions/configure-aws-credentials@v1
-        env:
-          aws-access-key-id: AKIAQEPBFCHW7E7Y47I6
-          aws-secret-access-key: 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
+        uses: shallwefootball/s3-upload-action@master
+        with:
+          aws_key_id: AKIAQEPBFCHW7E7Y47I6
+          aws_secret_access_key: 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
           aws-region: ap-south-1   
-      - run: aws s3 sync ./build s3://lokesh-test-bucket
+          aws_bucket: lokesh-test-bucket
+          source_dir: ./build
+          
