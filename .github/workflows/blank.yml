@@ -21,26 +21,9 @@ jobs:
          switches: -avzr --delete
          path: ./build/*
          remote_path: /etc
-         remote_host: uat-based-instances
+         remote_host: ec2-3-93-246-245.compute-1.amazonaws.com
          remote_user: root
          remote_key: "${{ secrets.CONTRACTS_APP_KEY}}"
-      - name: Upload Artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: build
-          path: build
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Download Artifact
-        uses: actions/download-artifact@master
-        with:
-          name: build
-          path: build
-      - uses: actions/checkout@master
       - name: Deploy to S3
         env:
           AWS_ACCESS_KEY_ID: AKIAQEPBFCHW7E7Y47I6
