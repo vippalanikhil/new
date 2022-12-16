@@ -4,33 +4,14 @@ on:
     branches:
       - master
 jobs:
-  build:
-    name: Build
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 19
-      - run: rm -rf node_modules
-      - run: npm cache clean --force
-      - name: Rsync build --omit-dir-times
-        uses: Burnett01/rsync-deployments@5.2
-        with:
-         switches: -avzr --delete
-         path: ./build/*
-         remote_path: /etc
-         remote_host: ec2-3-93-246-245.compute-1.amazonaws.com
-         remote_user: root
-         remote_key: "${{ secrets.CONTRACTS_APP_KEY}}"
-      - name: Deploy to S3
-        env:
-          AWS_ACCESS_KEY_ID: AKIAQEPBFCHW7E7Y47I6
-          AWS_SECRET_ACCESS_KEY: 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
-        run: |
-          aws s3 cp \
-          --recursive \
-          --acl public-read \
-          --region ap-southeast-2 \
-          ./build s3://lokesh-test-bucket
+    - uses: actions/checkout@master
+    - uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --acl public-read --follow-symlinks --delete --exclude '.git*/*'
+      env:
+        AWS_S3_BUCKET: lokesh-test-bucket
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
