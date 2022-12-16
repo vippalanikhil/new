@@ -16,3 +16,8 @@ jobs:
           node-version: "19"
       - name: upload
         uses: actions/upload-artifact@v2.2.0
+        with: 
+          name: build
+          path: build 
+        
+        
