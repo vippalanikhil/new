@@ -28,3 +28,5 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: docker run -itd --name=redis redis
+      - name: restart the container
+        run: docker restart redis
