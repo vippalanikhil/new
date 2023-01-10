@@ -16,7 +16,7 @@ jobs:
       - name: Connect to bastion host
         uses: appleboy/ssh-action@master
         with:
-          hostname: ec2-44-200-55-68.compute-1.amazonaws.com 
+          hostname: 44.200.55.68 
           username: ec2-user
           private-key: ${{ secrets.BASTION_PRIVATE_KEY }}
           script: |
