@@ -9,15 +9,15 @@ on:
     branches: [ "master" ]
 jobs:  
   build:
-    runs-on: self-hosted  
+    runs-on: ubuntu:latest  
     steps:    
       - uses: actions/checkout@v3
       # Runs a single command using the runners shell
       - name: Connect to bastion host
-        uses: appleboy/ssh-action@master
-        with:
-          hostname: 44.200.55.68 
-          username: ec2-user
-          private-key: ${{ secrets.BASTION_PRIVATE_KEY }}
+        env:
+          PRIVATE_KEY: ${{ secrets.BASTION_PRIVATE_KEY  }}
+        run: |
+          echo "$BASTION_PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ec2-user@44.200.55.68 '
           script: |
             /home/ec2-user/backend.sh
