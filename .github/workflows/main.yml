@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VERSION_LABEL: ${{ env.GITHUB_SHA[0:4] }}
+      DEPLOY_NUMBER: ${{ env.GITHUB_HEAD_REF }}
     steps:
 
     - name: Checkout source code
@@ -24,6 +24,6 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: test
         environment_name: Test-env-1
-        version_label: ${{ env.GITHUB_SHA }}
+        version_label: ${{ env.DEPLOY_NUMBER }}
         region: ap-southeast-1
         deployment_package: deploy.zip
