@@ -15,6 +15,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Generate deployment package
+      if: ${{ github.ref_name == 'master' }}
       run: zip -r deploy.zip . -x '*.git*'
 
     - name: Deploy to EB
