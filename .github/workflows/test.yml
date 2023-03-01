@@ -5,7 +5,7 @@ on:
       - master
 jobs:
   main:
-    name: Main
+    name: build
     uses: ./.github/workflows/main.yaml
 
   deploy:
