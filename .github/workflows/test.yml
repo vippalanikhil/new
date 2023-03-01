@@ -3,10 +3,18 @@ on:
   push:
     branches:
       - master
-
 jobs:
-  release:
+  main:
+    name: Main
+    uses: ./.github/workflows/main.yaml
+
+  deploy:
+    name: Deploy
+    needs: main
     runs-on: ubuntu-latest
+#jobs:
+#  release:
+#    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
