@@ -15,7 +15,7 @@ jobs:
       
       - name: Set tag name
         id: tag_name
-        run: echo "v$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+        run: echo "TAG_NAME=v$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
       
       - name: Create release
         id: create_release
