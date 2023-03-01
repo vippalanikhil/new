@@ -13,18 +13,3 @@ jobs:
 
     - name: Checkout source code
       uses: actions/checkout@v2
-
-    - name: Generate deployment package
-      if: ${{ github.ref_name == 'master' }}
-      run: zip -r deploy.zip . -x '*.git*'
-
-    - name: Deploy to EB
-      uses: einaregilsson/beanstalk-deploy@v21
-      with:
-        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        application_name: test
-        environment_name: Test-env-1
-        version_label: ver-${{ github.sha }}
-        region: ap-southeast-1
-        deployment_package: deploy.zip
