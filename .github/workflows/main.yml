@@ -22,10 +22,10 @@ jobs:
       if: success()      
       uses: dawidd6/action-send-mail@v3
       with:
-        #server_address: smtp.gmail.com
-        #server_port: 587
-        #username: ${{ secrets.EMAIL_USERNAME }}
-        #password: ${{ secrets.EMAIL_PASSWORD }}
+        server_address: smtp.gmail.com
+        server_port: 587
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
         from: 'kastrokiran123@gmail.com'
         to: 'vnikhil342@gmail.com'
         subject: 'Deployment job completed successfully'
