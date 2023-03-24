@@ -26,8 +26,8 @@ jobs:
         server_port: 587
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
-        from: 'kastrokiran123@gmail.com'
-        to: 'vnikhil342@gmail.com'
+        from: 'vnikhil342@gmail.com'
+        to: 'kastrokiran123@gmail.com'
         subject: 'Deployment job completed successfully'
         body: 'The deployment job in your workflow completed successfully.'
       
