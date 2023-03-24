@@ -18,6 +18,17 @@ jobs:
       id: tag_name
       run: echo "TAG_NAME=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
       
+    - name: Send email notification for deployment job
+      if: success()      
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 587
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: 'Deployment job completed successfully'
+        body: 'The deployment job in your workflow completed successfully.'
+      
     - name: Create release
       id: create_release
       uses: actions/create-release@v1
